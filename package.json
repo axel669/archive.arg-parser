@@ -1,0 +1,11 @@
+{
+  "name": "@axel669/args",
+  "version": "0.1.0",
+  "description": "",
+  "main": "arg-parser.js",
+  "scripts": {
+    "test": "tea arg-parser.tea -p > arg-parser.js && node test.js"
+  },
+  "author": "Axel",
+  "license": "MIT"
+}

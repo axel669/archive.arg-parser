@@ -1,0 +1,57 @@
+module.exports = (argFormats = {}) => {
+    let args = process.argv[2...]
+    let parsers = {_: []}
+    let names = {}
+    let results = {_: []}
+
+    let parseFor = (name) => if parsers[name] != void {
+        break parsers[name].map(
+            (parser) => parser(args.shift())
+        )
+    }
+    else {
+        break true
+    }
+
+    for key, value of argFormats {
+        let [name, keys] = key.split(":")
+        let pkeys = keys.split("|")
+
+        for pkey in pkeys {
+            names[pkey] = name
+            parsers[pkey] = value
+        }
+    }
+
+    while args.length > 0 {
+        let arg = args.shift()
+
+        switch {
+            case arg.startsWith("--") == true {
+                let argName = arg[2...]
+                results[names[argName] ?? argName] = parseFor(argName)
+            }
+            case arg.startsWith("-") == true {
+                let [*, ...flags] = arg.split("")
+
+                for flag in flags {
+                    // let value = if parsers[flag] != undefined {
+                    //     break parsers[flag].map(
+                    //         (parser) => parser(args.shift())
+                    //     )
+                    // }
+                    // else {
+                    //     break true
+                    // }
+                    results[names[flag] ?? flag] = parseFor(flag)
+                }
+            }
+            default {
+                let parser = parsers._.shift()
+                results._.push(parser?(arg) ?? arg)
+            }
+        }
+    }
+
+    return results
+}
