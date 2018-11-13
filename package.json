@@ -1,5 +1,5 @@
 {
-  "name": "@axel669/args",
+  "name": "@axel669/arg-parser",
   "version": "0.1.0",
   "description": "",
   "main": "arg-parser.js",
