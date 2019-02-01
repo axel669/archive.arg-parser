@@ -4,13 +4,24 @@ module.exports = (argFormats = {}) => {
     let names = {}
     let results = {_: []}
 
-    let parseFor = (name) => if parsers[name] != void {
-        break parsers[name].map(
-            (parser) => parser(args.shift())
-        )
-    }
-    else {
-        break true
+    // let parseFor = (name) => if parsers[name] != void {
+    //     break parsers[name].map(
+    //         (parser) => parser(args.shift())
+    //     )
+    // }
+    // else {
+    //     break true
+    // }
+    let parseFor = (name) => {
+        if parsers[name] != void {
+            if typeof parsers[name] == "function" {
+                return parsers[name](args.shift())
+            }
+            return parsers[name].map(
+                (parser) => parser(args.shift())
+            )
+        }
+        return true
     }
 
     for key, value of argFormats {
@@ -35,14 +46,6 @@ module.exports = (argFormats = {}) => {
                 let [*, ...flags] = arg.split("")
 
                 for flag in flags {
-                    // let value = if parsers[flag] != undefined {
-                    //     break parsers[flag].map(
-                    //         (parser) => parser(args.shift())
-                    //     )
-                    // }
-                    // else {
-                    //     break true
-                    // }
                     results[names[flag] ?? flag] = parseFor(flag)
                 }
             }

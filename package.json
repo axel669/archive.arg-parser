@@ -4,7 +4,8 @@
   "description": "",
   "main": "arg-parser.js",
   "scripts": {
-    "test": "tea arg-parser.tea -p > arg-parser.js && node test.js"
+    "test": "tea arg-parser.tea -p > arg-parser.js && node test.js",
+    "transpile": "tea arg-parser.tea -o arg-parser.js"
   },
   "author": "Axel",
   "license": "MIT"

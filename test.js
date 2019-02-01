@@ -1,6 +1,6 @@
 const args = require("./arg-parser.js")({
-    "wat:w|wat": [i => parseInt(i)],
-    "first:x|f|first": [i => parseFloat(i)],
+    "wat:w|wat": i => parseInt(i),
+    "first:x|f|first": i => parseFloat(i),
     "test:t|test": [i => i, i => i],
     "flag:flag": undefined
 });
